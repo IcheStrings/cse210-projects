@@ -36,6 +36,8 @@ public class Reference
     private int _verseStart;        // The starting verse number
     private int _verseEnd;          // The ending verse number
 
+    
+    
     // Constructor for a single verse
     public Reference(string book, int chapter, int verse)
     {
