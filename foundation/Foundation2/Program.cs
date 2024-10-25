@@ -46,144 +46,162 @@ class Program
 // Class for Product
 class Product
 {
-    private string name;
-    private string productId;
-    private double price;
-    private int quantity;
+    // Private member variables
+    private string _name;
+    private string _productId;
+    private double _price;
+    private int _quantity;
 
+    // Constructor for Product class
     public Product(string name, string productId, double price, int quantity)
     {
-        this.name = name;
-        this.productId = productId;
-        this.price = price;
-        this.quantity = quantity;
+        _name = name;
+        _productId = productId;
+        _price = price;
+        _quantity = quantity;
     }
 
+    // Method to calculate total cost of the product
     public double GetTotalCost()
     {
-        return price * quantity;
+        return _price * _quantity;
     }
 
+    // Getter methods for product details
     public string GetName()
     {
-        return name;
+        return _name;
     }
 
     public string GetProductId()
     {
-        return productId;
+        return _productId;
     }
 }
 
 // Class for Customer
 class Customer
 {
-    private string name;
-    private Address address;
+    // Private member variables
+    private string _name;
+    private Address _address;
 
+    // Constructor for Customer class
     public Customer(string name, Address address)
     {
-        this.name = name;
-        this.address = address;
+        _name = name;
+        _address = address;
     }
 
+    // Method to check if the customer lives in the USA
     public bool LivesInUSA()
     {
-        return address.IsInUSA();
+        return _address.IsInUSA();
     }
 
+    // Getter methods for customer details
     public string GetName()
     {
-        return name;
+        return _name;
     }
 
     public Address GetAddress()
     {
-        return address;
+        return _address;
     }
 }
 
 // Class for Address
 class Address
 {
-    private string streetAddress;
-    private string city;
-    private string state;
-    private string country;
+    // Private member variables
+    private string _streetAddress;
+    private string _city;
+    private string _state;
+    private string _country;
 
+    // Constructor for Address class
     public Address(string streetAddress, string city, string state, string country)
     {
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.state = state;
-        this.country = country;
+        _streetAddress = streetAddress;
+        _city = city;
+        _state = state;
+        _country = country;
     }
 
+    // Method to check if the address is in the USA
     public bool IsInUSA()
     {
-        return country == "USA";
+        return _country == "USA";
     }
 
+    // Override ToString() method to return the address in formatted string
     public override string ToString()
     {
-        return $"{streetAddress}\n{city}, {state}\n{country}";
+        return $"{_streetAddress}\n{_city}, {_state}\n{_country}";
     }
 }
 
 // Class for Order
 class Order
 {
-    private List<Product> products;
-    private Customer customer;
-    private double usaShippingCost = 5.00;
-    private double internationalShippingCost = 35.00;
+    // Private member variables
+    private List<Product> _products;
+    private Customer _customer;
+    private const double UsaShippingCost = 5.00;
+    private const double InternationalShippingCost = 35.00;
 
+    // Constructor for Order class
     public Order(Customer customer)
     {
-        this.customer = customer;
-        products = new List<Product>();
+        _customer = customer;
+        _products = new List<Product>();
     }
 
+    // Method to add a product to the order
     public void AddProduct(Product product)
     {
-        products.Add(product);
+        _products.Add(product);
     }
 
+    // Method to calculate total price of the order
     public double GetTotalPrice()
     {
         double total = 0;
 
         // Calculate total price of products
-        foreach (var product in products)
+        foreach (var product in _products)
         {
             total += product.GetTotalCost();
         }
 
         // Add shipping cost
-        if (customer.LivesInUSA())
+        if (_customer.LivesInUSA())
         {
-            total += usaShippingCost;
+            total += UsaShippingCost;
         }
         else
         {
-            total += internationalShippingCost;
+            total += InternationalShippingCost;
         }
 
         return total;
     }
 
+    // Method to get the packing label for the order
     public string GetPackingLabel()
     {
         string label = "";
-        foreach (var product in products)
+        foreach (var product in _products)
         {
             label += $"{product.GetName()} (ID: {product.GetProductId()})\n";
         }
         return label;
     }
 
+    // Method to get the shipping label for the order
     public string GetShippingLabel()
     {
-        return $"{customer.GetName()}\n{customer.GetAddress()}";
+        return $"{_customer.GetName()}\n{_customer.GetAddress()}";
     }
 }
